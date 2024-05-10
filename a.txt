@@ -1,0 +1,19 @@
+dotnet new gitignore
+
+dotnet new sln --name MyApp
+
+dotnet new classlib -o MyApp.Domain
+dotnet new classlib -o MyApp.Application
+dotnet new classlib -o MyApp.Infrastructure
+dotnet new webapi --use-controllers -o MyApp.Api
+
+dotnet sln add MyApp.Api/MyApp.Api.csproj
+dotnet sln add MyApp.Application/MyApp.Application.csproj
+dotnet sln add MyApp.Domain/MyApp.Domain.csproj
+dotnet sln add MyApp.Infrastructure/MyApp.Infrastructure.csproj
+
+
+dotnet add MyApp.Application reference MyApp.Domain/MyApp.Domain.csproj
+dotnet add MyApp.Infrastructure reference MyApp.Application/MyApp.Application.csproj
+dotnet add MyApp.Api reference MyApp.Application/MyApp.Application.csproj
+dotnet add MyApp.Api reference MyApp.Infrastructure/MyApp.Infrastructure.csproj
