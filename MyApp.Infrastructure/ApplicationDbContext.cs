@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.Domain.Entity;
+using MyApp.Infrastructure.Configurations;
 
-namespace MyApp.Infrastructure.Persistence;
+namespace MyApp.Infrastructure;
 
 public class ApplicationDbContext : DbContext
 {
@@ -13,31 +14,13 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(modelBuilder);
-
-       
-        modelBuilder.Entity<Genre>(entity =>
-        {
-            entity.ToTable("Genres");
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Name).IsRequired().HasMaxLength(255);
-            entity.Property(e => e.IsActive);
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
-            entity.HasMany<Guid>("_categories").WithOne(); // Assuming a shadow property for categories if not using another Entity
-        });
-
-        modelBuilder.Entity<Category>(entity =>
-        {
-            entity.ToTable("Categories");
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Name).IsRequired().HasMaxLength(255);
-            entity.Property(e => e.Description).HasMaxLength(10_000);
-            entity.Property(e => e.IsActive);
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
-        });
+        builder.ApplyConfiguration(new CategoryConfiguration());
+        builder.ApplyConfiguration(new GenreConfiguration());
 
         builder.ApplyConfiguration(new GenresCategoriesConfiguration());
+
     }
+
 }

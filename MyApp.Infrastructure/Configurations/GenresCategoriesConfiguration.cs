@@ -1,4 +1,3 @@
-using System;
 using MyApp.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

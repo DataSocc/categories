@@ -5,6 +5,7 @@ namespace MyApp.Domain.Entity;
 
 public class Category
 {
+    public Guid Id { get; protected set; } =Guid.NewGuid();
     public string Name { get; private set; }
     public string Description { get; private set; }
     public bool IsActive { get; private set; }

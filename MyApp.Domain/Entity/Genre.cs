@@ -1,8 +1,10 @@
 using MyApp.Domain.Validation;
 
 namespace MyApp.Domain.Entity;
-public class Genre 
+public class Genre
 {
+
+    public Guid Id { get; protected set; } = Guid.NewGuid();
     public string Name { get; private set; }
     public bool IsActive { get; private set; }
     public DateTime CreatedAt { get; private set; }
